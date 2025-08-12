@@ -1,30 +1,49 @@
-// pages/ForgotPasswordPage.jsx
-import { useRef } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { sendPasswordReset } from "../../store/login";
+import { sendPasswordReset } from "../../store/auth";
+// import "./forgotPassword.css";
 
 const ForgotPasswordPage = () => {
-  const emailRef = useRef();
   const dispatch = useDispatch();
-  const { successMessage, error, loading } = useSelector((state) => state.auth);
+  const [email, setEmail] = useState("");
+  console.log("forgort password page", email);
+
+  const { loading, error, successMessage } = useSelector((state) => state.auth);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    const email = emailRef.current.value;
-    await dispatch(sendPasswordReset(email));
+
+    const resultAction = await dispatch(sendPasswordReset(email));
+
+    if (resultAction.meta.requestStatus === "fulfilled") {
+      alert("Password reset email sent!");
+      setEmail("");
+    }
   };
+1
+
 
   return (
-    <div className="forgot-container">
-      <h2>Reset Password</h2>
-      <form onSubmit={submitHandler}>
-        <label>Enter your registered email:</label>
-        <input type="email" ref={emailRef} required />
-        <button disabled={loading}>Send Reset Link</button>
-      </form>
-      {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </div>
+    <form onSubmit={submitHandler} className="forgot-form">
+      <h1>Forgot Password</h1>
+
+      <label htmlFor="email">Email:</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+
+      <button type="submit" disabled={loading}>
+        Send Reset Link
+      </button>
+
+      {successMessage && <p className="success">{successMessage}</p>}
+      {error && <p className="error">{error}</p>}
+    </form>
   );
 };
 

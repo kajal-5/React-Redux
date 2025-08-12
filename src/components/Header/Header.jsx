@@ -1,56 +1,53 @@
+import { Link, Routes, Route } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../store/auth";
 
-
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
-import './header.css';
-
-import { toggleCart } from "../../store/cart";
+import LoginPage from "../Authentication/LoginPage";
+import ForgotPasswordPage from "../Authentication/ForgotPasswordPage";
+import ItemForm from "../Shop/ItemForm";
+import CartList from "../Cart/CartList";
+import ProtectedRoute from "./ProtectedRoute";
 import CartButton from "../Cart/CartButton";
 
-
-
-const Header=()=> {
-
-
-  const isAuthenticated =useSelector(state => state.auth.isAuthenticated);
+const Header = () => {
+  const { token, email } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const cartStatus = useSelector(state => state.cart.status);
-  const logoutHnadler = () => {
-    dispatch(authActions.logout());
-    alert('Logout successful!');
-  }
 
-  
+  const logoutHandler = () => {
+    dispatch(logout());
+  };
 
   return (
-    <header className="header-ribbon">
-      <h1>Redux Auth</h1>
-      {/* {isAuthenticated && ( */}
+    <>
+      <header>
         <nav>
-          <ul>
-            <li>
-              <a href="/">My products</a>
-            </li>
-            <li>
-              <a href="/">My Sales</a>
-            </li>
-            <li>
-              <button onClick={logoutHnadler}>Logout</button>
-            </li>
-            <li>
-              <CartButton/>
-            </li>
-            <li>
-              {cartStatus === 'pending' && <span style={{ color: 'orange' }}>Sending...</span>}
-              {cartStatus === 'success' && <span style={{ color: 'green' }}>Sent ✔</span>}
-              {cartStatus === 'error' && <span style={{ color: 'red' }}>Send Failed ✖</span>}
-            </li>
-          </ul>
-      </nav>
-    {/* )} */}
-      
-    </header>
+          {!token && (
+            <>
+              <Link to="/">Login</Link>
+              {/* <Link to="/forgot-password">Forgot Password</Link> */}
+            </>
+          )}
+          {token && (
+            <>
+              <Link to="/items">Items</Link>
+              <CartButton />
+              <span>Welcome, {email}</span>
+              <button onClick={logoutHandler}>Logout</button>
+            </>
+          )}
+        </nav>
+      </header>
+
+      {/* Always render cart list so toggle works */}
+      {token && <CartList />}
+
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/items" element={ <ProtectedRoute> <ItemForm /></ProtectedRoute>}/>
+      </Routes>
+    </>
   );
-}
+};
 
 export default Header;
