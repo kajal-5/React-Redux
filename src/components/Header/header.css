@@ -1,67 +1,89 @@
+
 .header-ribbon {
-  background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
-  color: #fff;
-  padding: 0.5rem 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  background-color: #312bdf; /* Nice blue ribbon */
+  color: white;
+  padding: 15px 20px;
+  top: 0;
+  left: 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
-.header-ribbon h1 {
-  margin: 0;
-  padding-left: 2rem;
-  font-size: 2rem;
-  font-weight: 700;
-  letter-spacing: 1px;
-  display: inline-block;
-}
-.header-ribbon nav {
-  display: inline-block;
-  float: right;
-  padding-right: 2rem;
-}
-.header-ribbon ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+
+/* Flex container for title & nav */
+/* .header-content {
   display: flex;
-  gap: 1.5rem;
+  justify-content: space-between; Push title to left, nav to right
+  gap: 20px;
   align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+} */
+
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.header-ribbon li {
-  display: inline-block;
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  gap: 20px; /* Space between ReduxAuth & ItemList */
 }
-.header-ribbon a {
-  color: #fff;
+
+.nav-right {
+  display: flex;
+  font-size: 1.3rem;
+  align-items: center;
+  gap: 15px;
+}
+/* Title styling */
+.header-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+/* Navigation links container */
+.nav-ribbon {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* All links in nav */
+.nav-ribbon a {
+  color: white;
   text-decoration: none;
+  font-size: 1.3rem;
   font-weight: 500;
-  font-size: 1.1rem;
-  transition: color 0.2s;
+  transition: color 0.3s ease;
 }
-.header-ribbon a:hover {
-  color: #ffd700;
+
+.nav-ribbon a:hover {
+  color: #ffdd57; /* Yellow highlight on hover */
 }
-.header-ribbon button {
-  background: #fff;
-  color: #007bff;
-  border: none;
-  border-radius: 4px;
-  padding: 6px 18px;
+
+/* Welcome text */
+.nav-ribbon span {
+  margin-left: 10px;
+  font-size: 1.3rem;
+  color: #f0f0f0;
+}
+
+/* Logout button */
+.nav-ribbon button {
+  background: transparent;
+  border: 1px solid white;
+  color: white;
+  padding: 5px 10px;
   font-size: 1rem;
-  font-weight: 600;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.3s ease;
 }
-.header-ribbon button:hover {
-  background: #ffd700;
-  color: #0056b3;
-}
-@media (max-width: 600px) {
-  .header-ribbon h1 {
-    font-size: 1.2rem;
-    padding-left: 1rem;
-  }
-  .header-ribbon nav {
-    padding-right: 1rem;
-  }
-  .header-ribbon ul {
-    gap: 0.7rem;
-  }
+
+.nav-ribbon button:hover {
+  background: white;
+  color: #4a90e2;
 }

@@ -1,0 +1,11 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("Images/dailyExp.png");
+    background-image: url("Images/img3.png");
+    background-repeat: no-repeat;  /* no tiling */
+    background-size: cover;        /* scale to cover full width */
+
+    background-position: top center;
+    
+}

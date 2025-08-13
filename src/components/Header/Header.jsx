@@ -8,6 +8,7 @@ import ItemForm from "../Shop/ItemForm";
 import CartList from "../Cart/CartList";
 import ProtectedRoute from "./ProtectedRoute";
 import CartButton from "../Cart/CartButton";
+import "./header.css";
 
 const Header = () => {
   const { token, email } = useSelector((state) => state.auth);
@@ -19,23 +20,24 @@ const Header = () => {
 
   return (
     <>
-      <header>
-        <nav>
-          {!token && (
-            <>
-              <Link to="/">Login</Link>
-              {/* <Link to="/forgot-password">Forgot Password</Link> */}
-            </>
-          )}
-          {token && (
-            <>
-              <Link to="/items">Items</Link>
-              <CartButton />
-              <span>Welcome, {email}</span>
-              <button onClick={logoutHandler}>Logout</button>
-            </>
-          )}
-        </nav>
+      <header className="header-ribbon">
+        <div className="header-content">
+          <div className="nav-left">
+            <span className="header-title">Redux Auth</span>
+            {!token && <Link to="/">Login</Link>}
+            {token && <span>Welcome, {email}</span>}
+          </div>
+
+          <div className="nav-right">
+            {token && (
+              <>
+                <CartButton />
+                {token && <Link to="/items">Items</Link>}
+                <button onClick={logoutHandler}>Logout</button>
+              </>
+            )}
+          </div>
+        </div>
       </header>
 
       {/* Always render cart list so toggle works */}
